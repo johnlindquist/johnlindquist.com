@@ -36,7 +36,7 @@ const Hero = () => {
             max-width: ${rhythm(15)};
           `}
         >
-          Your blog says the things you want to say.
+          Code Demos Made Just for You 🤗
         </h1>
       </Container>
       <div
@@ -53,6 +53,11 @@ const Description = styled.p`
   margin-bottom: 10px;
   display: inline-block;
 `
+
+const getEmoji = categories => {
+  if (!categories) return ''
+  return categories.includes('live') ? '🎥 ' : ''
+}
 
 export default function Index({ data: { site, allMdx } }) {
   const theme = useTheme()
@@ -84,6 +89,7 @@ export default function Index({ data: { site, allMdx } }) {
                 to={post.frontmatter.slug}
                 aria-label={`View ${post.frontmatter.title}`}
               >
+                {getEmoji(post.frontmatter.categories)}
                 {post.frontmatter.title}
               </Link>
             </h2>
@@ -138,6 +144,7 @@ export const pageQuery = graphql`
             title
             date(formatString: "MMMM DD, YYYY")
             description
+            categories
             banner {
               childImageSharp {
                 sizes(maxWidth: 720) {

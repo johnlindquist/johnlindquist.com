@@ -61,6 +61,7 @@ module.exports = {
     'gatsby-plugin-emotion',
     'gatsby-plugin-catch-links',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {

@@ -54,6 +54,7 @@ exports.createPages = ({ actions, graphql }) =>
               title
               slug
               date
+              categories
             }
           }
         }
@@ -200,7 +201,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       name: 'isPost',
       node,
-      value: true
+      value: true,
     })
   }
 }
