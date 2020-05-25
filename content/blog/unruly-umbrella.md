@@ -20,4 +20,4 @@ I sliced up samples of that and came up with this song:
 
 I fun new trick I picked up was to use the LFO to change the format based on the beat. This helped create a nice little movement completely unique to the sample.
 
-<TwitchEmbed id="v631705564"/>
+<YoutubeEmbed slug="mYoTbikUP2U"/>
