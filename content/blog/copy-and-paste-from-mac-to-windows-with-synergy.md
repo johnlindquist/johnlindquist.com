@@ -2,7 +2,7 @@
 slug: copy-and-paste-from-mac-to-windows-with-synergy
 title: Copy and Paste From Mac to Windows With Synergy
 date: 2020-05-27 21:05
-published: false
+published: true
 ---
 
 I've been streaming more and more using a Mac for development and making
