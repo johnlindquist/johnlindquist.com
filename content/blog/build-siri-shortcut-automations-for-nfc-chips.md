@@ -23,7 +23,10 @@ Or the full hour of me stumbling through learning this stuff here:
 
 <TwitchEmbed id="634779390"/>
 
-## Note
+## Notes
 
 You'll need an iPhone Xs or later for this to work. I tried this on
 my wife's iPhone X, and there is no "NFC" option.
+
+
+Also, NFC unfortunately does not work on Apple Watch.
