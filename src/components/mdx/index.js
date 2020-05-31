@@ -1,8 +1,5 @@
 import React from 'react'
 
-import Title from './Title'
-import Subtitle from './Subtitle'
-import Paragraph from './Paragraph'
 import Code from './Code'
 import Codesandbox from './Codesandbox'
 import EggheadEmbed from './EggheadEmbed'
@@ -12,11 +9,18 @@ import TwitchEmbed from './TwitchEmbed'
 import TwitterEmbed from './TwitterEmbed'
 
 export default {
-  h1: props => <Title {...props} />,
-  h2: props => <Subtitle {...props} />,
-  p: props => <Paragraph {...props} />,
   code: Code,
   pre: preProps => <pre {...preProps} />,
+  table: tableProps => (
+    <div
+      style={{
+        overflowX: 'auto',
+        width: '100%',
+      }}
+    >
+      <table {...tableProps}>{tableProps.children}</table>
+    </div>
+  ),
   Codesandbox,
   EggheadEmbed,
   YoutubeEmbed,

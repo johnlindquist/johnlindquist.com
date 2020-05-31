@@ -16,6 +16,7 @@ export default props => {
         position: 'relative',
         overflow: 'hidden',
         paddingTop: '56.25%',
+        marginBottom: '1.25rem',
       }}
     >
       <iframe

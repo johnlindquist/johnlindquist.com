@@ -17,18 +17,19 @@ export default props => {
   const hideNav = props.hide ? `` : `&hidenavigation=1`
   return (
     <div
+      className="lg:-mx-4"
       style={{
         position: 'relative',
         overflow: 'hidden',
-        paddingTop: '56.25%',
+        paddingTop: 'calc(56.25% + 16px)',
+        marginBottom: '1.25rem',
+        borderRadius: 5,
       }}
     >
       <iframe
         style={iframeStyle}
         title={props.title}
-        src={`https://codesandbox.io/embed/${
-          props.slug
-        }?fontsize=${fontsize}${console}${module}${view}${hideNav}`}
+        src={`https://codesandbox.io/embed/${props.slug}?fontsize=${fontsize}${console}${module}${view}${hideNav}`}
         frameBorder="0"
       />
     </div>

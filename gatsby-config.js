@@ -1,95 +1,79 @@
-const config = require('./config/website')
-const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
-
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
+const resolveConfig = require('tailwindcss/resolveConfig')
+const tailwindConfig = require('./tailwind.config.js')
 
 module.exports = {
-  pathPrefix: config.pathPrefix,
+  pathPrefix: '/',
   siteMetadata: {
-    siteUrl: config.siteUrl + pathPrefix,
-    title: config.siteTitle,
-    twitterHandle: config.twitterHandle,
-    description: config.siteDescription,
-    keywords: ['Video Blogger'],
-    canonicalUrl: config.siteUrl,
-    image: config.siteLogo,
-    author: {
-      name: config.author,
-      minibio: `
-        <strong>egghead</strong> is the premier place on the internet for 
-        experienced developers to enhance their skills and stay current
-        in the fast-faced field of web development.
-      `,
-    },
-    organization: {
-      name: config.organization,
-      url: config.siteUrl,
-      logo: config.siteLogo,
-    },
-    social: {
-      twitter: config.twitterHandle,
-      fbAppID: '',
-    },
+    title: `John Lindquist`,
+    author: `John Lindquist`,
+    description: `This is where I post things!`,
+    siteUrl: `https://johnlindquist.com`,
+    social: [
+      {
+        name: `Twitter`,
+        url: `https://twitter.com/johnlindquist`,
+      },
+      {
+        name: `Github`,
+        url: `https://github.com/johnlindquist`,
+      },
+    ],
   },
   plugins: [
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
-        name: 'blog',
+        path: `content/posts`,
+        name: `content/posts`,
       },
     },
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: ['.mdx', '.md', '.markdown'],
+        extensions: [`.mdx`, `.md`],
         gatsbyRemarkPlugins: [
           {
-            resolve: 'gatsby-remark-images',
+            resolve: `gatsby-remark-images`,
             options: {
-              backgroundColor: '#fafafa',
-              maxWidth: 1035,
+              maxWidth: 1380,
+              linkImagesToOriginal: false,
+              tracedSVG: true,
+              wrapperStyle: { marginBottom: '30rem' },
             },
           },
+          { resolve: `gatsby-remark-copy-linked-files` },
+          { resolve: `gatsby-remark-smartypants` },
+        ],
+        remarkPlugins: [require(`remark-slug`)],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-postcss`,
+      options: {
+        postCssPlugins: [
+          require(`tailwindcss`)(tailwindConfig),
+          require(`autoprefixer`),
+          require(`postcss-nested`),
+          ...(process.env.NODE_ENV === `production`
+            ? [require(`cssnano`)]
+            : []),
         ],
       },
     },
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
-    'gatsby-plugin-emotion',
     'gatsby-plugin-catch-links',
-    'gatsby-plugin-react-helmet',
     'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: config.siteTitle,
-        short_name: config.siteTitleShort,
-        description: config.siteDescription,
-        start_url: config.pathPrefix,
-        background_color: config.backgroundColor,
-        theme_color: config.themeColor,
-        display: 'standalone',
-        icons: [
-          {
-            src: '/android-chrome-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/android-chrome-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `GOOGLE_ID`,
+        name: `John Lindquist`,
+        short_name: `johnlindquist.com`,
+        start_url: `/`,
+        background_color: `#000`,
+        theme_color: `#000`,
+        display: `minimal-ui`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
     {
@@ -109,50 +93,48 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.edges.map(edge => {
-                return Object.assign({}, edge.node.frontmatter, {
-                  description: edge.node.excerpt,
-                  date: edge.node.fields.date,
-                  url: site.siteMetadata.siteUrl + '/' + edge.node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + '/' + edge.node.fields.slug,
-                })
+            serialize: ({ query: { site, allBlogPost } }) => {
+              return allBlogPost.edges.map(edge => {
+                return (
+                  {},
+                  edge.node,
+                  {
+                    title: edge.node.title,
+                    description: edge.node.excerpt,
+                    date: edge.node.date,
+                    url: site.siteMetadata.siteUrl + edge.node.slug,
+                    guid: site.siteMetadata.siteUrl + edge.node.slug,
+                    // custom_elements: [{ "content:encoded": edge.node.body }],
+                  }
+                )
               })
             },
             query: `
               {
-                allMdx(
-                  limit: 1000,
-                  filter: { frontmatter: { published: { ne: false } } }
-                  sort: { order: DESC, fields: [frontmatter___date] }
+                allBlogPost(
+                  sort: { fields: [date, title], order: DESC }
+                  filter: { published: { eq: true } }
                 ) {
                   edges {
                     node {
-                      excerpt(pruneLength: 250)
-                      fields { 
-                        slug
-                        date
-                      }
-                      frontmatter {
-                        title
-                      }
+                      excerpt
+                      body
+                      slug
+                      title
+                      date
                     }
                   }
                 }
               }
             `,
             output: '/rss.xml',
-            title: 'Blog RSS Feed',
+            title: 'johnlindquist.com',
           },
         ],
       },
     },
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/lib/typography`,
-      },
-    },
-    'gatsby-plugin-offline',
+    // this (optional) plugin enables Progressive Web App + Offline functionality
+    // To learn more, visit: https://gatsby.dev/offline
+    `gatsby-plugin-offline`,
   ],
 }

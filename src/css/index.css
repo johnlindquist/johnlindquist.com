@@ -1,0 +1,26 @@
+@import './markdown.css';
+@tailwind base;
+@tailwind components;
+
+body {
+  @apply text-gray-900;
+}
+
+.container {
+  @apply max-w-screen-lg mx-auto p-5 pb-24;
+}
+
+.bg-blur {
+  backdrop-filter: blur(4px);
+  /* -webkit-backdrop-filter: blur(2px); */
+}
+
+/*
+  This will hide the focus indicator if the element receives focus via the mouse,
+  but it will still show up on keyboard focus.
+*/
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+@tailwind utilities;
