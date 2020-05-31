@@ -1,11 +1,11 @@
 import { useSpring, interpolate } from 'react-spring'
 import { MDXProvider } from '@mdx-js/react'
+import { useRect } from '../hooks/useRect'
 import mdxComponents from './mdx'
 import React from 'react'
 import Nav from './nav'
 import SEO from './seo'
 import 'focus-visible'
-import { useRect } from '../hooks/useRect'
 
 export default function Layout(props) {
   // they see me browsing
