@@ -38,7 +38,7 @@ export default function Post({
       type="article"
       slug={slug}
     >
-      <div className="grid md:grid-cols-4 grid-cols-1 gap-8">
+      <div className="grid md:grid-cols-4 grid-cols-1 gap-8 md:mt-4 mt-0">
         <div className="md:col-span-3">
           <h1 className="text-4xl font-bold leading-tight pb-8">{title}</h1>
           {!published && (

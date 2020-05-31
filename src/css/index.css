@@ -7,12 +7,29 @@ body {
 }
 
 .container {
-  @apply max-w-screen-lg mx-auto p-5 pb-24;
+  @apply max-w-screen-lg mx-auto p-5 pt-0 pb-24;
 }
 
 .bg-blur {
   backdrop-filter: blur(4px);
   /* -webkit-backdrop-filter: blur(2px); */
+}
+
+.landing-header::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 200px;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 20%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  @screen md {
+    height: 0;
+  }
 }
 
 /*
