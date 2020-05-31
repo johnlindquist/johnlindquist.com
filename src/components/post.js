@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from './layout'
 import Link from './link'
-import kebabCase from 'lodash/kebabCase'
+import { kebabCase, isEmpty } from 'lodash'
 import useClipboard from 'react-use-clipboard'
 import TimeAgo from 'timeago-react'
 
@@ -55,14 +55,17 @@ export default function Post({
         <aside className="h-full border-t-2 md:border-none border-gray-200">
           <div className="flex flex-col items-start md:sticky top-0 pt-5">
             <div className="flex flex-wrap justify-center items-center">
-              <Link
-                className="capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
-                to={`/posts/${kebabCase(category)}`}
-              >
-                {category}
-              </Link>
+              {!isEmpty(category) && (
+                <Link
+                  className="capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
+                  to={`/posts/${kebabCase(category)}`}
+                >
+                  {category}
+                </Link>
+              )}
               <TimeAgo
-                className="mx-2 mt-px text-xs text-gray-700"
+                className={`${!isEmpty(category) &&
+                  'mx-2'} mt-px text-xs text-gray-700`}
                 datetime={date}
               />
             </div>

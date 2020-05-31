@@ -1,5 +1,5 @@
 ---
-slug: merge-and-withlatestfrom-in-vanilla-js
+slug: demo/merge-and-withlatestfrom-in-vanilla-js
 title: Merge and WithLatestFrom in Vanilla JS
 date: 2019-09-16 12:09
 published: true
