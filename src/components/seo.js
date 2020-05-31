@@ -38,7 +38,7 @@ function SEO({ description, lang, meta, title, card, type, slug }) {
         },
         {
           property: `og:title`,
-          content: title,
+          content: title || site.siteMetadata.title,
         },
         {
           property: `og:description`,
@@ -77,7 +77,7 @@ function SEO({ description, lang, meta, title, card, type, slug }) {
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: title || site.siteMetadata.title,
         },
         {
           name: `twitter:description`,
