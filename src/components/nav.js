@@ -19,6 +19,7 @@ const Nav = React.forwardRef((props, ref) => {
     <nav className="lg:py-8 py-1 lg:mb-5 mb-10 inline-block">
       {/* Logo */}
       <a
+        href="/"
         onMouseDown={handleLogoClick}
         onContextMenu={e => e.preventDefault()}
         className="flex items-center cursor-pointer"
