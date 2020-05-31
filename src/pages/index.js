@@ -1,161 +1,123 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import { css } from '@emotion/core'
-import styled from '@emotion/styled'
-import Layout from 'components/Layout'
-import Link from 'components/Link'
-import { useTheme } from 'components/Theming'
-import Container from 'components/Container'
-import { rhythm } from '../lib/typography'
+import Layout from '../components/layout'
+import Link from '../components/link'
+import Markdown from '../utils/card-markdown'
+import kebabCase from 'lodash/kebabCase'
 
-const Hero = () => {
-  const theme = useTheme()
-  return (
-    <section
-      css={css`
-        color: ${theme.colors.white};
-        width: 100%;
-        background: ${theme.colors.primary};
-        padding: 20px 0 30px 0;
-        display: flex;
-      `}
-    >
-      <Container
-        css={css`
-          display: flex;
-          flex-direction: column;
-        `}
-      >
-        <h1
-          css={css`
-            color: ${theme.colors.white};
-            position: relative;
-            z-index: 5;
-            line-height: 1.5;
-            margin: 0;
-            max-width: ${rhythm(15)};
-          `}
-        >
-          Code Demos Made Just for You 🤗
-        </h1>
-      </Container>
-      <div
-        css={css`
-          height: 150px;
-          overflow: hidden;
-        `}
-      />
-    </section>
-  )
-}
+const favorites = [
+  {
+    title: 'Customize Karabiner With Goku',
+    slug: 'customize-karabiner-with-goku/',
+  },
+  {
+    title: 'Rolling Your Own Creation Operators in RxJS',
+    slug: 'creation-operators-in-rxjs/',
+  },
+  {
+    title: 'Automatically Create a Github Repo From the Command-Line',
+    slug: 'automatically-create-a-github-repo-from-the-command-line/',
+  },
+]
 
-const Description = styled.p`
-  margin-bottom: 10px;
-  display: inline-block;
-`
+// TODO: Use this array of popular topics to filter out topics in the sidebbar
+// const popularTopics = ['JavaScript', 'RxJS', 'Github']
 
 const getEmoji = categories => {
   if (!categories) return ''
   return categories.includes('live') ? '🎥 ' : ''
 }
 
-export default function Index({ data: { site, allMdx } }) {
-  const theme = useTheme()
+export default function Index({ data: { allBlogPost, categories } }) {
   return (
-    <Layout site={site}>
-      <Hero />
-      <Container
-        css={css`
-          padding-bottom: 0;
-        `}
-      >
-        {allMdx.edges.map(({ node: post }) => (
-          <div
-            key={post.id}
-            css={css`
-              margin-bottom: 40px;
-            `}
+    <Layout>
+      <div className="grid md:grid-cols-3 grid-cols-1 md:gap-16 gap-6">
+        <div className="col-span-2">
+          <h3 className="uppercase mb-6 text-sm tracking-wide text-gray-600">
+            Recently Published
+          </h3>
+          <ul>
+            {allBlogPost.nodes.map(post => (
+              <li key={post.id}>
+                <Link
+                  className="text-base hover:text-indigo-700 transition-colors duration-75"
+                  to={post.slug}
+                >
+                  <h4 className="text-2xl font-semibold mb-3 leading-tight">
+                    {getEmoji(post.category)}
+                    {post.title}
+                  </h4>
+                  <Markdown source={post.excerpt} />
+                  <div className="mb-10">Read more →</div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            to="/posts"
+            className="my-5 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-50 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
           >
-            <h2
-              css={css({
-                marginBottom: rhythm(0.3),
-                transition: 'all 150ms ease',
-                ':hover': {
-                  color: theme.colors.primary,
-                },
-              })}
-            >
+            View all posts
+          </Link>
+        </div>
+        <div>
+          <h3 className="uppercase mb-6 text-sm tracking-wide text-gray-600">
+            <Link to="/posts">Topics</Link>
+          </h3>
+          <div className="flex flex-wrap -m-1">
+            {categories.group.map(category => (
               <Link
-                to={post.frontmatter.slug}
-                aria-label={`View ${post.frontmatter.title}`}
+                key={category.fieldValue}
+                className="m-1 capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
+                to={`/posts/${kebabCase(category.fieldValue)}`}
               >
-                {getEmoji(post.frontmatter.categories)}
-                {post.frontmatter.title}
+                {category.fieldValue}
               </Link>
-            </h2>
-            <Description>
-              {post.excerpt}{' '}
-              <Link
-                to={post.frontmatter.slug}
-                aria-label={`View ${post.frontmatter.title}`}
-              >
-                Read Article →
-              </Link>
-            </Description>
+            ))}
           </div>
-        ))}
-        <Link to="/blog" aria-label="Visit blog page">
-          View all articles
-        </Link>
-        <hr />
-      </Container>
+          <h3 className="uppercase mb-4 mt-10 text-sm tracking-wide text-gray-600">
+            Favorites
+          </h3>
+          <ul>
+            {favorites.map(favorite => (
+              <li key={favorite.slug} className="mb-4">
+                <Link
+                  className="text-lg font-semibold hover:text-indigo-600 leading-tight flex"
+                  to={favorite.slug}
+                >
+                  {favorite.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {/* <h3 className="uppercase mb-6 mt-10 text-sm tracking-wide text-gray-600">
+            More stuff
+          </h3>
+          ... */}
+        </div>
+      </div>
     </Layout>
   )
 }
 
 export const pageQuery = graphql`
   query {
-    site {
-      ...site
-      siteMetadata {
+    allBlogPost(
+      sort: { fields: date, order: DESC }
+      filter: { published: { eq: true } }
+      limit: 8
+    ) {
+      nodes {
         title
+        excerpt
+        slug
+        id
+        category
       }
     }
-    allMdx(
-      limit: 5
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { published: { ne: false } } }
-    ) {
-      edges {
-        node {
-          excerpt(pruneLength: 190)
-          id
-          fields {
-            title
-            slug
-            date
-          }
-          parent {
-            ... on File {
-              sourceInstanceName
-            }
-          }
-          frontmatter {
-            title
-            date(formatString: "MMMM DD, YYYY")
-            description
-            categories
-            banner {
-              childImageSharp {
-                sizes(maxWidth: 720) {
-                  ...GatsbyImageSharpSizes
-                }
-              }
-            }
-            slug
-            keywords
-          }
-        }
+    categories: allBlogPost {
+      group(field: category) {
+        fieldValue
       }
     }
   }
