@@ -4,6 +4,7 @@ import Layout from '../components/layout'
 import Link from '../components/link'
 import Markdown from '../utils/card-markdown'
 import kebabCase from 'lodash/kebabCase'
+import illustration from '../images/projects.svg'
 
 const favorites = [
   {
@@ -18,6 +19,7 @@ const favorites = [
     title: 'Automatically Create a Github Repo From the Command-Line',
     slug: 'automatically-create-a-github-repo-from-the-command-line/',
   },
+  // TODO: Add more favorite posts
 ]
 
 // TODO: Use this array of popular topics to filter out topics in the sidebbar
@@ -31,7 +33,18 @@ const getEmoji = categories => {
 export default function Index({ data: { allBlogPost, categories } }) {
   return (
     <Layout>
-      <div className="grid md:grid-cols-3 grid-cols-1 md:gap-16 gap-6">
+      <header
+        style={{
+          backgroundImage: `url(${illustration})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'right',
+          height: 300,
+          zIndex: -1,
+        }}
+        className="landing-header w-full mx-auto absolute left-0 top-0 border-b border-gray-200"
+      />
+
+      <div className="grid md:grid-cols-3 grid-cols-1 md:gap-16 gap-6 mt-48">
         <div className="col-span-2">
           <h3 className="uppercase mb-6 text-sm tracking-wide text-gray-600">
             Recently Published

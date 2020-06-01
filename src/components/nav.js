@@ -16,7 +16,7 @@ const Nav = React.forwardRef((props, ref) => {
     }
   }
   return (
-    <nav className="lg:py-8 py-1 lg:mb-5 mb-10 inline-block">
+    <nav className="lg:py-8 sm:py-5 sm:ml-0 -ml-2 py-3 lg:mb-5 mb-10 inline-block">
       {/* Logo */}
       <a
         href="/"
