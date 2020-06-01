@@ -3,7 +3,7 @@ slug: what-even-is-programming
 title: What Even is Programming?
 date: 2019-03-08
 published: true
-category: ['thoughts']
+category: ['programming']
 ---
 
 I don't know anymore. I thought that programming was writing some code and handing it over to a computer to execute.
