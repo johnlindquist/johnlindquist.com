@@ -25,7 +25,7 @@ const favorites = [
 // TODO: Use this array of popular topics to filter out topics in the sidebbar
 // const popularTopics = ['JavaScript', 'RxJS', 'Github']
 
-const getEmoji = categories => {
+const getEmoji = (categories) => {
   if (!categories) return ''
   return categories.includes('live') ? '🎥 ' : ''
 }
@@ -50,7 +50,7 @@ export default function Index({ data: { allBlogPost, categories } }) {
             Recently Published
           </h3>
           <ul>
-            {allBlogPost.nodes.map(post => (
+            {allBlogPost.nodes.map((post) => (
               <li key={post.id}>
                 <Link
                   className="text-base hover:text-indigo-700 transition-colors duration-75"
@@ -78,7 +78,7 @@ export default function Index({ data: { allBlogPost, categories } }) {
             <Link to="/posts">Topics</Link>
           </h3>
           <div className="flex flex-wrap -m-1">
-            {categories.group.map(category => (
+            {categories.group.map((category) => (
               <Link
                 key={category.fieldValue}
                 className="m-1 capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
@@ -92,7 +92,7 @@ export default function Index({ data: { allBlogPost, categories } }) {
             Favorites
           </h3>
           <ul>
-            {favorites.map(favorite => (
+            {favorites.map((favorite) => (
               <li key={favorite.slug} className="mb-4">
                 <Link
                   className="text-lg font-semibold hover:text-indigo-600 leading-tight flex"
@@ -113,18 +113,18 @@ export default function Index({ data: { allBlogPost, categories } }) {
   )
 }
 
-export const pageQuery = graphql`
-  query {
+export const indexQuery = graphql`
+  {
     allBlogPost(
       sort: { fields: date, order: DESC }
       filter: { published: { eq: true } }
       limit: 8
     ) {
       nodes {
+        id
         title
         excerpt
         slug
-        id
         category
       }
     }

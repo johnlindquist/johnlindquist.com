@@ -16,7 +16,7 @@ export const query = graphql`
       excerpt
       body
       slug
-      card {
+      socialImage {
         childImageSharp {
           fixed(width: 1200) {
             src
