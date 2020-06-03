@@ -21,13 +21,6 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `content/posts`,
-        name: `content/posts`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
@@ -45,6 +38,20 @@ module.exports = {
           { resolve: `gatsby-remark-smartypants` },
         ],
         remarkPlugins: [require(`remark-slug`)],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `content/posts`,
+        name: `content/posts`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `content/assets`,
+        name: `content/assets`,
       },
     },
     {
@@ -95,7 +102,7 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allBlogPost } }) => {
-              return allBlogPost.edges.map(edge => {
+              return allBlogPost.edges.map((edge) => {
                 return (
                   {},
                   edge.node,

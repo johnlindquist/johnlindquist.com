@@ -2,8 +2,11 @@ const fs = require(`fs`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const debug = require(`debug`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
-const { urlResolve, createContentDigest } = require(`gatsby-core-utils`)
+const {
+  createFilePath,
+  createRemoteFileNode,
+} = require(`gatsby-source-filesystem`)
+const { urlResolve, createContentDigest, slash } = require(`gatsby-core-utils`)
 const _ = require('lodash')
 
 const debugBlog = debug(`gatsby-theme-blog-core`)
@@ -19,7 +22,7 @@ exports.onPreBootstrap = ({ store }, themeOptions) => {
     path.join(program.directory, assetPath),
   ]
 
-  dirs.forEach(dir => {
+  dirs.forEach((dir) => {
     debugBlog(`Initializing ${dir} directory`)
     if (!fs.existsSync(dir)) {
       mkdirp.sync(dir)
@@ -27,7 +30,7 @@ exports.onPreBootstrap = ({ store }, themeOptions) => {
   })
 }
 
-const mdxResolverPassthrough = fieldName => async (
+const mdxResolverPassthrough = (fieldName) => async (
   source,
   args,
   context,
@@ -55,7 +58,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       category: [String]!
       keywords: [String]!
       excerpt: String!
-      card: File @fileByRelativePath
+      socialImage: File
       published: Boolean!
       editUrl: String!
   }`)
@@ -71,8 +74,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         slug: {
           type: `String!`,
         },
-        card: {
-          type: `File`,
+        socialImage: {
+          type: 'File',
+          resolve: async (source, args, context, info) => {
+            if (source.socialImage___NODE) {
+              return context.nodeModel.getNodeById({
+                id: source.socialImage___NODE,
+              })
+            } else if (source.socialImage) {
+              return processRelativeImage(source, context, 'socialImage')
+            }
+          },
         },
         published: {
           type: `Boolean!`,
@@ -99,8 +111,39 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
       },
       interfaces: [`Node`, `BlogPost`],
+      extensions: {
+        infer: false,
+      },
     }),
   )
+}
+
+function processRelativeImage(source, context, type) {
+  // Image is a relative path - find a corresponding file
+  const mdxFileNode = context.nodeModel.findRootNodeAncestor(
+    source,
+    (node) => node.internal && node.internal.type === `File`,
+  )
+  if (!mdxFileNode) {
+    return
+  }
+  const imagePath = slash(path.join(mdxFileNode.dir, source[type]))
+
+  const fileNodes = context.nodeModel.getAllNodes({ type: `File` })
+  for (let file of fileNodes) {
+    if (file.absolutePath === imagePath) {
+      return file
+    }
+  }
+}
+
+function validURL(str) {
+  try {
+    new URL(str)
+    return true
+  } catch (e) {
+    return false
+  }
 }
 
 // Create fields for post slugs and source
@@ -159,9 +202,25 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
-      card: node.frontmatter.card,
       published: node.frontmatter.published,
       editUrl: editUrl,
+      socialImage: node.frontmatter.socialImage,
+    }
+
+    if (validURL(node.frontmatter.socialImage)) {
+      // create a file node for image URLs
+      const remoteFileNode = await createRemoteFileNode({
+        url: node.frontmatter.socialImage,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        cache,
+        store,
+      })
+      // if the file was created, attach the new node to the parent node
+      if (remoteFileNode) {
+        fieldData.socialImage___NODE = remoteFileNode.id
+      }
     }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
@@ -198,11 +257,8 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           node {
             id
             slug
-            category
           }
         }
-      }
-      categories: allBlogPost {
         group(field: category) {
           fieldValue
         }
@@ -217,19 +273,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   // Create Posts and Post pages.
   const { allBlogPost } = result.data
   const posts = allBlogPost.edges
-  const categories = result.data.categories.group
-
-  // Create a page for each Category
-  categories.forEach(category => {
-    createPage({
-      // TODO: kebabCase turns JavaScript into /java-script
-      path: `/posts/${_.kebabCase(category.fieldValue)}/`,
-      component: CategoryTemplate,
-      context: {
-        category: category.fieldValue,
-      },
-    })
-  })
+  const categories = result.data.allBlogPost.group
 
   // Create a page for each Post
   posts.forEach(({ node: post }, index) => {
@@ -247,12 +291,17 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     })
   })
 
-  // Create the Posts page
-  // createPage({
-  //   path: '/posts',
-  //   component: PostsTemplate,
-  //   context: {},
-  // })
+  // Create a page for each Category
+  categories.forEach((category) => {
+    createPage({
+      // TODO: kebabCase turns JavaScript into /java-script
+      path: `/posts/${_.kebabCase(category.fieldValue)}/`,
+      component: CategoryTemplate,
+      context: {
+        category: category.fieldValue,
+      },
+    })
+  })
 
   // Create the Posts page
   createPage({

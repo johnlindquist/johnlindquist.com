@@ -13,7 +13,7 @@ export default function Post({
       slug,
       date,
       excerpt,
-      card,
+      socialImage,
       published,
       category,
       editUrl,
@@ -29,15 +29,33 @@ export default function Post({
     },
   )
 
+  const [hasYoutubeVideo, setHasYoutubeVideo] = React.useState(false)
+
+  function hasYtEmbed() {
+    const iframe = document.getElementsByTagName('iframe')
+    if (iframe) {
+      const iframes = Array.prototype.map.call(iframe, (i) =>
+        i.src.includes('youtube'),
+      )
+      const includesYoutubeUrl = iframes.includes(true)
+      return includesYoutubeUrl
+    } else return false
+  }
+
+  React.useEffect(() => {
+    setHasYoutubeVideo(hasYtEmbed())
+  }, [hasYoutubeVideo, setHasYoutubeVideo])
+
   return (
     <Layout
       title={title}
       excerpt={excerpt}
       {...props}
-      card={card && card.childImageSharp.fixed.src}
+      card={socialImage && socialImage.childImageSharp.fixed.src}
       type="article"
       slug={slug}
     >
+      {/* {hasYoutubeVideo && 'this post has a youtube video'} */}
       <div className="grid md:grid-cols-4 grid-cols-1 gap-8 md:mt-4 mt-0">
         <div className="md:col-span-3">
           <h1 className="text-4xl font-bold leading-tight pb-8">{title}</h1>
@@ -64,8 +82,9 @@ export default function Post({
                 </Link>
               )}
               <TimeAgo
-                className={`${!isEmpty(category) &&
-                  'mx-2'} mt-px text-xs text-gray-700`}
+                className={`${
+                  !isEmpty(category) && 'mx-2'
+                } mt-px text-xs text-gray-700`}
                 datetime={date}
               />
             </div>

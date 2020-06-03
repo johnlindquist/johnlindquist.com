@@ -27,7 +27,7 @@ export default function Layout(props) {
     <div role="main" onMouseMove={onMove}>
       <SEO
         {...props}
-        card={props.card}
+        card={props.socialImage}
         description={props.excerpt}
         title={props.title}
         type={props.type}
