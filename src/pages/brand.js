@@ -10,9 +10,9 @@ export default function Brand() {
       </h1>
       <h2 className="text-xl font-semibold mb-6 text-center">Avatars</h2>
       <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-10">
-        {logos.map(logo => (
+        {logos.map((logo) => (
           <div
-            id={logo.name}
+            key={logo.name}
             className="p-3 flex flex-col items-center justify-center"
           >
             <img src={logo.svg} alt={logo.name} />
