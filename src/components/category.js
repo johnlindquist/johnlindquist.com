@@ -6,9 +6,6 @@ import Capitalize from 'lodash/capitalize'
 import { kebabCase } from 'lodash'
 
 export default function Category({ posts, categories, location, ...props }) {
-  // const categories = category.map((c) => c.fieldName)
-
-  // console.log(category.some((c) => c.fieldValue === 'javascript'))
   const category = categories
     .filter((c) => location.pathname.includes(kebabCase(c.fieldValue)))
     .map((c) => c.fieldValue)
