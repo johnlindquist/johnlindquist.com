@@ -2,7 +2,7 @@
 slug: generate-markdown-links-from-your-selected-text-and-chromes-current-url-using-alfred
 title: Generate Markdown Links From Your Selected Text and Chrome's Current Url Using Alfred
 date: 2020-06-11 14:06
-published: false
+published: true
 category: ['automation']
 ---
 
