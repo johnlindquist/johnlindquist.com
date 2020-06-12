@@ -14,10 +14,9 @@ I've been spending a lot of time trying to optimize the workflow around adding m
 
 3. Output using the "Copy to Clipboard" output template.
 
-I'm really happy with the result. You can see it in action below:
+I'm really happy with the result. You can download it here: [download md-link alfred workflow](https://github.com/johnlindquist/alfred-workflows/blob/master/md-link.alfredworkflow?raw=true)
 
 
-
-
+And watch a video of how it was made here:
 
 <EggheadEmbed slug="egghead-generate-a-markdown-link-from-selected-text-with-chrome-s-current-url-using-alfred"/>
