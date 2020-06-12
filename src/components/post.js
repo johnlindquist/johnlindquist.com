@@ -85,7 +85,7 @@ export default function Post({
                 ))}
               <TimeAgo
                 className={`${!isEmpty(category) && 'mx-2'} ${
-                  category.length > 2 ? 'mt-2' : 'mt-px'
+                  category.length > 2 ? 'md:mt-2' : 'mt-px'
                 } text-xs text-gray-700`}
                 datetime={date}
               />

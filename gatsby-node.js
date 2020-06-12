@@ -294,7 +294,6 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   // Create a page for each Category
   categories.forEach((category) => {
     createPage({
-      // TODO: kebabCase turns JavaScript into /java-script
       path: `/posts/${_.kebabCase(category.fieldValue)}/`,
       component: CategoryTemplate,
       context: {

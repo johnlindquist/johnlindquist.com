@@ -3,11 +3,10 @@ import Layout from './layout'
 import Markdown from '../utils/card-markdown'
 import Link from './link'
 import Capitalize from 'lodash/capitalize'
-import { kebabCase } from 'lodash'
 
-export default function Category({ posts, categories, location, ...props }) {
+export default function Category({ posts, categories, pageContext, ...props }) {
   const category = categories
-    .filter((c) => location.pathname.includes(kebabCase(c.fieldValue)))
+    .filter((c) => pageContext.category === c.fieldValue)
     .map((c) => c.fieldValue)
 
   return (
