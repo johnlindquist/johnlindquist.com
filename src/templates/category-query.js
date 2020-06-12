@@ -20,6 +20,9 @@ export const query = graphql`
           id
         }
       }
+      group(field: category) {
+        fieldValue
+      }
     }
   }
 `

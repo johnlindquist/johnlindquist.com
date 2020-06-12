@@ -3,7 +3,7 @@ slug: proxy-api
 title: Wrap an API with a Proxy
 date: 2019-02-06
 published: true
-category: ['JavaScript']
+category: ['javascript']
 twitterEmbedVideo: egghead-wrap-an-api-with-a-proxy
 ---
 

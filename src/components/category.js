@@ -3,11 +3,18 @@ import Layout from './layout'
 import Markdown from '../utils/card-markdown'
 import Link from './link'
 import Capitalize from 'lodash/capitalize'
+import { kebabCase } from 'lodash'
 
-export default function Category({ posts, ...props }) {
-  const category = posts[0].category
+export default function Category({ posts, categories, location, ...props }) {
+  // const categories = category.map((c) => c.fieldName)
+
+  // console.log(category.some((c) => c.fieldValue === 'javascript'))
+  const category = categories
+    .filter((c) => location.pathname.includes(kebabCase(c.fieldValue)))
+    .map((c) => c.fieldValue)
+
   return (
-    <Layout title={`${Capitalize(category)} Posts`} {...props}>
+    <Layout title={`${Capitalize(category[0].fieldValue)} Posts`} {...props}>
       <div className="grid grid-cols-3 mb-10">
         <Link
           to="/posts"
@@ -27,15 +34,16 @@ export default function Category({ posts, ...props }) {
           All Posts
         </Link>
         <h1 className="text-4xl font-bold text-center capitalize">
-          {category}
+          {category[0] === 'javascript' ? 'JavaScript' : category[0]}
         </h1>
       </div>
 
       <ul
-        className={`grid gap-8 ${posts.length > 1 &&
-          'md:grid-cols-2 grid-cols-1'}`}
+        className={`grid gap-8 ${
+          posts.length > 1 && 'md:grid-cols-2 grid-cols-1'
+        }`}
       >
-        {posts.map(post => (
+        {posts.map((post) => (
           <li key={post.id}>
             <Link
               className="rounded-md p-8 bg-gray-100 block text-base hover:text-indigo-700 transition-colors duration-75"

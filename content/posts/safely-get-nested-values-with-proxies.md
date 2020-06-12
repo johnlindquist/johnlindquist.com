@@ -3,7 +3,7 @@ slug: safely-get-nested-values-with-proxies
 title: Safely Get Nested Values with Proxies
 date: 2019-01-10
 published: true
-category: ['JavaScript']
+category: ['javascript']
 ---
 
 We've all been in the situation where we are trying to access a very deeply nested property inside of an object but it errors out because one of those properties you're trying to access is undefined.

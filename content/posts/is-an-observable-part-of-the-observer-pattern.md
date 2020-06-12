@@ -3,7 +3,7 @@ slug: is-an-observable-part-of-the-observer-pattern
 title: Is an Observable Part of the Observer Pattern?
 date: 2019-09-18 10:09
 published: true
-category: ['JavaScript']
+category: ['javascript']
 ---
 
 ## TL;DR

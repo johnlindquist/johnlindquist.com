@@ -72,19 +72,21 @@ export default function Post({
         </div>
         <aside className="h-full border-t-2 md:border-none border-gray-200">
           <div className="flex flex-col items-start md:sticky top-0 pt-5">
-            <div className="flex flex-wrap justify-center items-center">
-              {!isEmpty(category) && (
-                <Link
-                  className="capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
-                  to={`/posts/${kebabCase(category)}`}
-                >
-                  {category}
-                </Link>
-              )}
+            <div className="flex flex-wrap items-center">
+              {!isEmpty(category) &&
+                category.map((c) => (
+                  <Link
+                    key={c}
+                    className="capitalize mr-2 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
+                    to={`/posts/${kebabCase(c)}`}
+                  >
+                    {c === 'javascript' ? 'JavaScript' : c}
+                  </Link>
+                ))}
               <TimeAgo
-                className={`${
-                  !isEmpty(category) && 'mx-2'
-                } mt-px text-xs text-gray-700`}
+                className={`${!isEmpty(category) && 'mx-2'} ${
+                  category.length > 2 ? 'mt-2' : 'mt-px'
+                } text-xs text-gray-700`}
                 datetime={date}
               />
             </div>

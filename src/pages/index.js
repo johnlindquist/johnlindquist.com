@@ -6,6 +6,7 @@ import Markdown from '../utils/card-markdown'
 import kebabCase from 'lodash/kebabCase'
 import illustration from '../images/projects.svg'
 
+// TODO: Favorite could be a boolean in frontmatter? Or is this better?
 const favorites = [
   {
     title: 'Customize Karabiner With Goku',
@@ -22,8 +23,8 @@ const favorites = [
   // TODO: Add more favorite posts
 ]
 
-// TODO: Use this array of popular topics to filter out topics in the sidebbar
-// const popularTopics = ['JavaScript', 'RxJS', 'Github']
+// TODO: Use this array of popular topics to filter out topics in sidebbar
+// const popularTopics = ['javascript', 'RxJS', 'Github']
 
 const getEmoji = (categories) => {
   if (!categories) return ''
@@ -84,7 +85,9 @@ export default function Index({ data: { allBlogPost, categories } }) {
                 className="m-1 capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
                 to={`/posts/${kebabCase(category.fieldValue)}`}
               >
-                {category.fieldValue}
+                {category.fieldValue === 'javascript'
+                  ? 'JavaScript'
+                  : category.fieldValue}
               </Link>
             ))}
           </div>

@@ -3,7 +3,7 @@ slug: explaining-streams-to-rich-harris
 title: Explaining Streams to Rich Harris
 date: 2019-09-05 11:45
 published: true
-category: ['JavaScript']
+category: ['javascript']
 ---
 
 _Before we begin, I'm intentionally avoiding loaded words found in stream libraries. 
