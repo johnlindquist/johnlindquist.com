@@ -9,16 +9,20 @@ import illustration from '../images/projects.svg'
 // TODO: Favorite could be a boolean in frontmatter? Or is this better?
 const favorites = [
   {
-    title: 'Customize Karabiner With Goku',
-    slug: 'customize-karabiner-with-goku/',
+    title: `Customize Karabiner With Goku`,
+    slug: `customize-karabiner-with-goku/`,
   },
   {
-    title: 'Rolling Your Own Creation Operators in RxJS',
-    slug: 'creation-operators-in-rxjs/',
+    title: `Rolling Your Own Creation Operators in RxJS`,
+    slug: `creation-operators-in-rxjs/`,
   },
   {
-    title: 'Automatically Create a Github Repo From the Command-Line',
-    slug: 'automatically-create-a-github-repo-from-the-command-line/',
+    title: `Automatically Create a Github Repo From the Command-Line`,
+    slug: `automatically-create-a-github-repo-from-the-command-line/`,
+  },
+  {
+    title: `Generate Markdown Links From Your Selected Text and Chrome's Current Url Using Alfred`,
+    slug: `generate-markdown-links-from-your-selected-text-and-chromes-current-url-using-alfred/`,
   },
   // TODO: Add more favorite posts
 ]

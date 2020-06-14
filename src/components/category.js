@@ -7,10 +7,10 @@ import Capitalize from 'lodash/capitalize'
 export default function Category({ posts, categories, pageContext, ...props }) {
   const category = categories
     .filter((c) => pageContext.category === c.fieldValue)
-    .map((c) => c.fieldValue)
+    .map((c) => c.fieldValue)[0]
 
   return (
-    <Layout title={`${Capitalize(category[0].fieldValue)} Posts`} {...props}>
+    <Layout title={`${Capitalize(category.fieldValue)} Posts`} {...props}>
       <div className="grid grid-cols-3 mb-10">
         <Link
           to="/posts"
@@ -21,7 +21,7 @@ export default function Category({ posts, categories, pageContext, ...props }) {
           All Posts
         </Link>
         <h1 className="text-4xl font-bold text-center capitalize">
-          {category[0] === 'javascript' ? 'JavaScript' : category[0]}
+          {category === 'javascript' ? 'JavaScript' : category}
         </h1>
       </div>
 

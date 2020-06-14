@@ -11,14 +11,16 @@ const _ = require('lodash')
 
 const debugBlog = debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./src/utils/default-options`)
+const createSchemaCustomization = require(`./gatsby/create-schema-customization`)
 
 // Ensure that content directories exist at site-level
 exports.onPreBootstrap = ({ store }, themeOptions) => {
   const { program } = store.getState()
-  const { contentPath, assetPath } = withDefaults(themeOptions)
+  const { contentPath, assetPath, snippetsPath } = withDefaults(themeOptions)
 
   const dirs = [
     path.join(program.directory, contentPath),
+    path.join(program.directory, snippetsPath),
     path.join(program.directory, assetPath),
   ]
 
@@ -30,112 +32,7 @@ exports.onPreBootstrap = ({ store }, themeOptions) => {
   })
 }
 
-const mdxResolverPassthrough = (fieldName) => async (
-  source,
-  args,
-  context,
-  info,
-) => {
-  const type = info.schema.getType(`Mdx`)
-  const mdxNode = context.nodeModel.getNodeById({
-    id: source.parent,
-  })
-  const resolver = type.getFields()[fieldName].resolve
-  const result = await resolver(mdxNode, args, context, {
-    fieldName,
-  })
-  return result
-}
-
-exports.createSchemaCustomization = ({ actions, schema }) => {
-  const { createTypes } = actions
-  createTypes(`interface BlogPost @nodeInterface {
-      id: ID!
-      title: String!
-      body: String!
-      slug: String!
-      date: Date! @dateformat
-      category: [String]!
-      keywords: [String]!
-      excerpt: String!
-      socialImage: File
-      published: Boolean!
-      editUrl: String!
-  }`)
-
-  createTypes(
-    schema.buildObjectType({
-      name: `MdxBlogPost`,
-      fields: {
-        id: { type: `ID!` },
-        title: {
-          type: `String!`,
-        },
-        slug: {
-          type: `String!`,
-        },
-        socialImage: {
-          type: 'File',
-          resolve: async (source, args, context, info) => {
-            if (source.socialImage___NODE) {
-              return context.nodeModel.getNodeById({
-                id: source.socialImage___NODE,
-              })
-            } else if (source.socialImage) {
-              return processRelativeImage(source, context, 'socialImage')
-            }
-          },
-        },
-        published: {
-          type: `Boolean!`,
-        },
-        editUrl: {
-          type: `String!`,
-        },
-        date: { type: `Date!`, extensions: { dateformat: {} } },
-        category: { type: `[String]!` },
-        keywords: { type: `[String]!` },
-        excerpt: {
-          type: `String!`,
-          args: {
-            pruneLength: {
-              type: `Int`,
-              defaultValue: 220,
-            },
-          },
-          resolve: mdxResolverPassthrough(`excerpt`),
-        },
-        body: {
-          type: `String!`,
-          resolve: mdxResolverPassthrough(`body`),
-        },
-      },
-      interfaces: [`Node`, `BlogPost`],
-      extensions: {
-        infer: false,
-      },
-    }),
-  )
-}
-
-function processRelativeImage(source, context, type) {
-  // Image is a relative path - find a corresponding file
-  const mdxFileNode = context.nodeModel.findRootNodeAncestor(
-    source,
-    (node) => node.internal && node.internal.type === `File`,
-  )
-  if (!mdxFileNode) {
-    return
-  }
-  const imagePath = slash(path.join(mdxFileNode.dir, source[type]))
-
-  const fileNodes = context.nodeModel.getAllNodes({ type: `File` })
-  for (let file of fileNodes) {
-    if (file.absolutePath === imagePath) {
-      return file
-    }
-  }
-}
+exports.createSchemaCustomization = createSchemaCustomization
 
 function validURL(str) {
   try {
@@ -153,7 +50,7 @@ exports.onCreateNode = async (
   themeOptions,
 ) => {
   const { createNode, createParentChildLink } = actions
-  const { contentPath, basePath } = withDefaults(themeOptions)
+  const { contentPath, snippetsPath, basePath } = withDefaults(themeOptions)
 
   // Make sure it's an MDX node
   if (node.internal.type !== `Mdx`) {
@@ -188,7 +85,7 @@ exports.onCreateNode = async (
     slug = slug.replace(/\/*$/, `/`)
 
     // assign edit url per post
-    const editUrl =
+    const editPostUrl =
       'https://github.com/johnlindquist/johnlindquist.com/edit/master/content/posts' +
       createFilePath({
         node: fileNode,
@@ -203,7 +100,7 @@ exports.onCreateNode = async (
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
       published: node.frontmatter.published,
-      editUrl: editUrl,
+      editUrl: editPostUrl,
       socialImage: node.frontmatter.socialImage,
     }
 
@@ -239,10 +136,68 @@ exports.onCreateNode = async (
     })
     createParentChildLink({ parent: node, child: getNode(mdxBlogPostId) })
   }
+
+  //
+  if (node.internal.type === `Mdx` && source === snippetsPath) {
+    let slug
+    if (node.frontmatter.slug) {
+      if (path.isAbsolute(node.frontmatter.slug)) {
+        // absolute paths take precedence
+        slug = node.frontmatter.slug
+      } else {
+        // otherwise a relative slug gets turned into a sub path
+        slug = urlResolve(basePath, node.frontmatter.slug)
+      }
+    } else {
+      // otherwise use the filepath function from gatsby-source-filesystem
+      const filePath = createFilePath({
+        node: fileNode,
+        getNode,
+        basePath: snippetsPath,
+      })
+
+      slug = urlResolve(basePath, filePath)
+    }
+    // normalize use of trailing slash
+    slug = slug.replace(/\/*$/, `/`)
+    const editSnippetUrl =
+      'https://github.com/johnlindquist/johnlindquist.com/edit/master/content/snippets' +
+      createFilePath({
+        node: fileNode,
+        getNode,
+        basePath: contentPath,
+      }).replace(/\/*$/, ``) +
+      '.md'
+
+    const fieldData = {
+      title: node.frontmatter.title,
+      slug,
+      date: node.frontmatter.date,
+      published: node.frontmatter.published,
+      editUrl: editSnippetUrl,
+    }
+
+    const mdxSnippetId = createNodeId(`${node.id} >>> MdxSnippet`)
+    await createNode({
+      ...fieldData,
+      // Required fields.
+      id: mdxSnippetId,
+      parent: node.id,
+      children: [],
+      internal: {
+        type: `MdxSnippet`,
+        contentDigest: createContentDigest(fieldData),
+        content: JSON.stringify(fieldData),
+        description: `Mdx implementation of the Snippet interface`,
+      },
+    })
+    createParentChildLink({ parent: node, child: getNode(mdxSnippetId) })
+  }
 }
 
 // These templates are simply data-fetching wrappers that import components
 const PostTemplate = require.resolve(`./src/templates/post-query`)
+const SnippetTemplate = require.resolve(`./src/templates/snippet-query`)
 const CategoryTemplate = require.resolve(`./src/templates/category-query`)
 const PostsTemplate = require.resolve(`./src/templates/posts-query`)
 
@@ -263,6 +218,14 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
           fieldValue
         }
       }
+      allSnippet(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
     }
   `)
 
@@ -271,8 +234,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   }
 
   // Create Posts and Post pages.
-  const { allBlogPost } = result.data
+  const { allBlogPost, allSnippet } = result.data
   const posts = allBlogPost.edges
+  const snippets = allSnippet.edges
   const categories = result.data.allBlogPost.group
 
   // Create a page for each Post
@@ -307,5 +271,21 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     path: '/posts',
     component: PostsTemplate,
     context: {},
+  })
+
+  // Create a page for each Snippet
+  snippets.forEach(({ node: snippet }, index) => {
+    const previous = index === snippets.length - 1 ? null : snippets[index + 1]
+    const next = index === 0 ? null : snippets[index - 1]
+    const { slug } = snippet
+    createPage({
+      path: `/snippets${slug}`,
+      component: SnippetTemplate,
+      context: {
+        id: snippet.id,
+        previousId: previous ? previous.node.id : undefined,
+        nextId: next ? next.node.id : undefined,
+      },
+    })
   })
 }
