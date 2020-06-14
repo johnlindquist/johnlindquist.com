@@ -86,7 +86,7 @@ exports.onCreateNode = async (
     slug = slug.replace(/\/*$/, `/`)
 
     // assign edit url per post
-    const editPostUrl =
+    const postEditUrl =
       'https://github.com/johnlindquist/johnlindquist.com/edit/master/content/posts' +
       createFilePath({
         node: fileNode,
@@ -101,7 +101,7 @@ exports.onCreateNode = async (
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
       published: node.frontmatter.published,
-      editUrl: editPostUrl,
+      editUrl: postEditUrl,
       socialImage: node.frontmatter.socialImage,
     }
 
@@ -168,7 +168,7 @@ exports.onCreateNode = async (
     const isInsideFolder = isMdx
       ? snippetAbsolutePath.includes('index.mdx')
       : snippetAbsolutePath.includes('index.md')
-    const editSnippetUrl = `https://github.com/johnlindquist/johnlindquist.com/edit/master/content/snippets${createFilePath(
+    const snippetEditUrl = `https://github.com/johnlindquist/johnlindquist.com/edit/master/content/snippets${createFilePath(
       { node: fileNode, getNode, basePath: snippetsPath },
     ).replace(/\/*$/, ``)}${
       isInsideFolder ? `/index.md${isMdx ? 'x' : ''}` : `.md${isMdx ? 'x' : ''}`
@@ -179,7 +179,7 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       published: node.frontmatter.published,
-      editUrl: editSnippetUrl,
+      editUrl: snippetEditUrl,
     }
 
     const mdxSnippetId = createNodeId(`${node.id} >>> MdxSnippet`)
