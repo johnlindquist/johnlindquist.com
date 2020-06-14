@@ -13,7 +13,13 @@ let iframeStyle = {
   border: '0',
 }
 
-export default props => {
+const site = `&parent=${
+  process.env.NODE_ENV === `production` ? 'johnlindquist.com' : 'localhost'
+}`
+
+console.log(site)
+
+export default (props) => {
   return (
     <div
       style={{
@@ -26,7 +32,7 @@ export default props => {
       <iframe
         style={iframeStyle}
         title={props.title}
-        src={`https://player.twitch.tv/?autoplay=false&video=${props.id}`}
+        src={`https://player.twitch.tv/?autoplay=false&video=${props.id}${site}`}
         frameBorder="0"
         allowFullScreen
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
