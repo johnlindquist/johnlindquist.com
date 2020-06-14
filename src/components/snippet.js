@@ -66,9 +66,9 @@ export default function Snippet({
             <Link
               className="mt-2 inline-flex items-center p-2 border border-gray-200 text-xs leading-4 font-medium rounded text-gray-700 bg-white hover:text-indigo-600 focus:outline-none focus:border-indigo-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
               to={`https://twitter.com/intent/tweet/?text=${encodeURIComponent(
-                title + ' Snippet' + ', post by @johnlindquist',
+                `${title}, snippet by @johnlindquist`,
               )}&url=${encodeURIComponent(
-                siteMetadata.siteUrl + '/snippet' + slug,
+                siteMetadata.siteUrl + '/snippets' + slug,
               )}`}
             >
               {/* prettier-ignore */}
