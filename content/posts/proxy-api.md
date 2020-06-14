@@ -7,8 +7,6 @@ category: ['javascript']
 twitterEmbedVideo: egghead-wrap-an-api-with-a-proxy
 ---
 
-# Wrap an API with a Proxy
-
 [codesandbox proxy api example](https://codesandbox.io/embed/github/johnlindquist/proxy-lessons/tree/proxy-api?module=index.js&view=editor)
 
 

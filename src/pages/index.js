@@ -49,7 +49,7 @@ export default function Index({ data: { allBlogPost, categories } }) {
         className="landing-header w-full mx-auto absolute left-0 top-0 border-b border-gray-200"
       />
 
-      <div className="grid md:grid-cols-3 grid-cols-1 md:gap-16 gap-6 mt-48">
+      <div className="grid md:grid-cols-3 grid-cols-1 md:gap-16 gap-6 md:mt-56 mt-60">
         <div className="col-span-2">
           <h3 className="uppercase mb-6 text-sm tracking-wide text-gray-600">
             Recently Published
