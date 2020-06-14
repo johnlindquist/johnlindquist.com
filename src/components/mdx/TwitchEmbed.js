@@ -17,8 +17,6 @@ const site = `&parent=${
   process.env.NODE_ENV === `production` ? 'johnlindquist.com' : 'localhost'
 }`
 
-console.log(site)
-
 export default (props) => {
   return (
     <div

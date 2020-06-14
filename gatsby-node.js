@@ -61,6 +61,7 @@ exports.onCreateNode = async (
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
 
+  // Posts
   if (node.internal.type === `Mdx` && source === contentPath) {
     let slug
     if (node.frontmatter.slug) {
@@ -137,7 +138,7 @@ exports.onCreateNode = async (
     createParentChildLink({ parent: node, child: getNode(mdxBlogPostId) })
   }
 
-  //
+  // Snippets
   if (node.internal.type === `Mdx` && source === snippetsPath) {
     let slug
     if (node.frontmatter.slug) {
@@ -160,14 +161,18 @@ exports.onCreateNode = async (
     }
     // normalize use of trailing slash
     slug = slug.replace(/\/*$/, `/`)
-    const editSnippetUrl =
-      'https://github.com/johnlindquist/johnlindquist.com/edit/master/content/snippets' +
-      createFilePath({
-        node: fileNode,
-        getNode,
-        basePath: contentPath,
-      }).replace(/\/*$/, ``) +
-      '.md'
+
+    // Get Snippet GitHub URL
+    const snippetAbsolutePath = node.fileAbsolutePath
+    const isMdx = snippetAbsolutePath.includes('.mdx')
+    const isInsideFolder = isMdx
+      ? snippetAbsolutePath.includes('index.mdx')
+      : snippetAbsolutePath.includes('index.md')
+    const editSnippetUrl = `https://github.com/johnlindquist/johnlindquist.com/edit/master/content/snippets${createFilePath(
+      { node: fileNode, getNode, basePath: snippetsPath },
+    ).replace(/\/*$/, ``)}${
+      isInsideFolder ? `/index.md${isMdx ? 'x' : ''}` : `.md${isMdx ? 'x' : ''}`
+    }`
 
     const fieldData = {
       title: node.frontmatter.title,
