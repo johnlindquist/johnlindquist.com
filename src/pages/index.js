@@ -1,9 +1,10 @@
 import React from 'react'
+import Fuse from 'fuse.js'
 import { graphql } from 'gatsby'
-import Layout from '../components/layout'
 import Link from '../components/link'
-import Markdown from '../utils/card-markdown'
 import kebabCase from 'lodash/kebabCase'
+import Layout from '../components/layout'
+import Markdown from '../utils/card-markdown'
 import illustration from '../images/projects.svg'
 
 // TODO: Favorite could be a boolean in frontmatter? Or is this better?
@@ -35,7 +36,26 @@ const getEmoji = (categories) => {
   return categories.includes('live') ? '🎥 ' : ''
 }
 
-export default function Index({ data: { allBlogPost, categories } }) {
+export default function Index({ data: { allBlogPost, allPosts, categories } }) {
+  // Search
+  const fuseOptions = {
+    keys: [
+      { name: 'title', weight: 0.8 },
+      { name: 'excerpt', weight: 0.5 },
+      { name: 'category', weight: 0.2 },
+    ],
+    useExtendedSearch: true,
+  }
+  const posts = allPosts.nodes.map((post) => post)
+  const fuse = new Fuse(posts, fuseOptions)
+
+  const [searchValue, setSearchValue] = React.useState('')
+  const searchOn = searchValue.length > 0
+  const searchRef = React.useRef(null)
+  const result = fuse.search(searchValue)
+
+  console.log(result)
+
   return (
     <Layout>
       <header
@@ -51,26 +71,78 @@ export default function Index({ data: { allBlogPost, categories } }) {
 
       <div className="grid md:grid-cols-3 grid-cols-1 md:gap-16 gap-6 md:mt-56 mt-60">
         <div className="col-span-2">
-          <h3 className="uppercase mb-6 text-sm tracking-wide text-gray-600">
-            Recently Published
-          </h3>
-          <ul>
-            {allBlogPost.nodes.map((post) => (
-              <li key={post.id}>
-                <Link
-                  className="text-base hover:text-indigo-700 transition-colors duration-75"
-                  to={post.slug}
+          <form className="mb-8">
+            <label htmlFor="search" className="sr-only">
+              Search
+            </label>
+            <div className="relative rounded-md shadow-sm">
+              <input
+                autoComplete="off"
+                aria-labelledby="search"
+                type="search"
+                id="search"
+                ref={searchRef}
+                onChange={(e) => {
+                  e.preventDefault()
+                  setSearchValue(e.target.value)
+                }}
+                className="form-input pl-8 block w-full sm:text-base sm:leading-5"
+                placeholder={`Search posts (${allPosts.totalCount})`}
+                value={searchValue}
+              />
+              {/* prettier-ignore */}
+              <svg className="absolute sm:top-2 top-3 mt-px ml-2 text-gray-400" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g fill="none" className="nc-icon-wrapper"><path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM2 8a6 6 0 1 1 10.89 3.476l4.817 4.817a1 1 0 0 1-1.414 1.414l-4.816-4.816A6 6 0 0 1 2 8z" fill="currentColor"/></g></svg>
+              {!searchOn && (
+                <div
+                  className="lg:visible invisible  absolute shadow-sm border border-gray-200 right-2 w-6 h-6 text-xs leading-none bg-white text-gray-600 rounded-md flex items-center justify-center"
+                  style={{ top: 7 }}
                 >
-                  <h4 className="text-2xl font-semibold mb-3 leading-tight">
-                    {getEmoji(post.category)}
-                    {post.title}
-                  </h4>
-                  <Markdown source={post.excerpt} />
-                  <div className="mb-10">Read more →</div>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                  {'/'}
+                </div>
+              )}
+            </div>
+          </form>
+          {searchOn ? (
+            <ul>
+              {result.map(({ item: post }) => (
+                <li key={post.id} className="pb-4">
+                  <Link
+                    className="text-base hover:text-indigo-700 transition-colors duration-75"
+                    to={post.slug}
+                  >
+                    <h4 className="text-2xl font-semibold mb-3 leading-tight">
+                      {getEmoji(post.category)}
+                      {post.title}
+                    </h4>
+                    <Markdown source={post.excerpt} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <>
+              <h3 className="uppercase mb-6 text-sm tracking-wide text-gray-600">
+                Recently Published
+              </h3>
+              <ul>
+                {allBlogPost.nodes.map((post) => (
+                  <li key={post.id}>
+                    <Link
+                      className="text-base hover:text-indigo-700 transition-colors duration-75"
+                      to={post.slug}
+                    >
+                      <h4 className="text-2xl font-semibold mb-3 leading-tight">
+                        {getEmoji(post.category)}
+                        {post.title}
+                      </h4>
+                      <Markdown source={post.excerpt} />
+                      <div className="mb-10">Read more →</div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           <Link
             to="/posts"
             className="my-5 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-50 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
@@ -138,6 +210,20 @@ export const indexQuery = graphql`
     categories: allBlogPost {
       group(field: category) {
         fieldValue
+      }
+    }
+    allPosts: allBlogPost(
+      sort: { fields: date, order: DESC }
+      filter: { published: { eq: true } }
+      limit: 1000
+    ) {
+      totalCount
+      nodes {
+        id
+        title
+        excerpt
+        slug
+        category
       }
     }
   }
