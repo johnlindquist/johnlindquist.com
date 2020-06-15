@@ -54,8 +54,6 @@ export default function Index({ data: { allBlogPost, allPosts, categories } }) {
   const searchRef = React.useRef(null)
   const result = fuse.search(searchValue)
 
-  console.log(result)
-
   return (
     <Layout>
       <header
