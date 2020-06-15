@@ -69,7 +69,7 @@ export default function Index({ data: { allBlogPost, allPosts, categories } }) {
 
       <div className="grid md:grid-cols-3 grid-cols-1 md:gap-16 gap-6 md:mt-56 mt-60">
         <div className="col-span-2">
-          <form className="mb-8">
+          <form className="mb-8" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="search" className="sr-only">
               Search
             </label>
