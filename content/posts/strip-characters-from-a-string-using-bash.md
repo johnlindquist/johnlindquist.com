@@ -3,7 +3,7 @@ slug: strip-characters-from-a-string-using-bash
 title: Strip Characters From a String Using Bash
 date: 2020-05-26 09:05
 published: true
-category: ['automation']
+category: ['Automation']
 ---
 
 Today I ran into the scenario where I want to use bash/zsh to remove

@@ -3,7 +3,7 @@ slug: customize-karabiner-with-goku
 title: Customize Karabiner With Goku
 date: 2019-10-16 16:10
 published: true
-category: ['automation']
+category: ['Automation']
 ---
 
 I love keyboards and I super love keyboard shortcuts.

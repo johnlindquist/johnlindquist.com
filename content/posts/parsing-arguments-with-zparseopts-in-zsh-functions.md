@@ -3,7 +3,7 @@ slug: parsing-arguments-with-zparseopts-in-zsh-functions
 title: Parsing Arguments With Zparseopts in Zsh Functions
 date: 2020-06-11 12:06
 published: true
-category: ['automation', 'zsh']
+category: ['Automation', 'zsh']
 ---
 
 I've always been a little scared of zsh. Probably because JavaScript and [writing

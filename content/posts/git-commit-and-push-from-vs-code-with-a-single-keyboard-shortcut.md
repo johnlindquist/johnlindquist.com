@@ -3,7 +3,7 @@ slug: git-commit-and-push-from-vs-code-with-a-single-keyboard-shortcut
 title: Git Commit and Push From VS Code With a Single Keyboard Shortcut
 date: 2019-04-20 19:04
 published: true
-category: ['automation']
+category: ['Automation']
 ---
 
 First, install the [runInTerminal](https://marketplace.visualstudio.com/items?itemName=kortina.run-in-terminal) extension.

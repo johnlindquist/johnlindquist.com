@@ -3,7 +3,7 @@ slug: build-siri-shortcut-automations-for-nfc-chips
 title: Build Siri Shortcut Automations for NFC Chips
 date: 2020-05-28 20:05
 published: true
-category: ['automation']
+category: ['Automation']
 ---
 
 My NFC chips arrived in the mail today. I bought these ones from Amazon (I don't know if there's a "best" chip):

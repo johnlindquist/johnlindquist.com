@@ -3,7 +3,7 @@ slug: generate-markdown-links-from-your-selected-text-and-chromes-current-url-us
 title: Generate Markdown Links From Your Selected Text and Chrome's Current Url Using Alfred
 date: 2020-06-11 14:06
 published: true
-category: ['automation']
+category: ['Automation']
 ---
 
 I've been spending a lot of time trying to optimize the workflow around adding more posts to my [digital garden](https://johnlindquist.com/) and a couple of the biggest holdups were around adding links to pages I was looking at in Chrome. I figured I'd take a stab at optimizing the process based on my [Alfred](https://www.alfredapp.com/) experience and everything I've been learning with zsh. I came up with a flow I'm pretty happy with:
