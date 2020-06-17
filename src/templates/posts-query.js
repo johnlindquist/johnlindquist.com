@@ -10,7 +10,7 @@ export const query = graphql`
         title
       }
     }
-    categories: allBlogPost {
+    categories: allBlogPost(sort: { fields: [date, title], order: DESC }) {
       group(field: category) {
         fieldValue
       }

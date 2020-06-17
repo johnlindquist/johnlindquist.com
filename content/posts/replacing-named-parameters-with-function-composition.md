@@ -3,7 +3,7 @@ slug: replacing-named-parameters-with-function-composition
 title: Replacing Named Parameters With Function Composition
 date: 2019-04-08 14:04
 published: true
-category: ['JavaScript']
+category: ['javascript']
 readingTime: 10 minutes
 twitterEmbedVideo: javascript-refactor-named-parameters-to-function-composition
 ---

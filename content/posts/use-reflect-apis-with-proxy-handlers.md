@@ -3,7 +3,7 @@ slug: use-reflect-apis-with-proxy-handlers
 date: 2019-01-08
 title: 'Use Reflect APIs with Proxy Handlers'
 description: 'Learn how to use Reflect APIs with Proxy Handlers'
-category: ['JavaScript']
+category: ['javascript']
 keywords: ['javascript', 'proxy', 'reflect']
 published: true
 ---

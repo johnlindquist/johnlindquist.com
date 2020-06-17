@@ -3,7 +3,7 @@ slug: focused
 title: Focused - Putting Proxies to Work
 date: 2019-01-11
 published: true
-category: ['JavaScript']
+category: ['javascript']
 ---
 
 # Focused

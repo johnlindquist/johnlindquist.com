@@ -3,7 +3,7 @@ slug: what-is-the-observer-pattern-in-javascript
 title: What Is the Observer Pattern in JavaScript?
 date: 2019-09-17 13:09
 published: true
-category: ['JavaScript']
+category: ['javascript']
 ---
 
 The _Observer Pattern_ has `state` and objects that are notified when state changes so they can query the state.

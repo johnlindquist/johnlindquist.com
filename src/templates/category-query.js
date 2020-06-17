@@ -10,7 +10,9 @@ export const query = graphql`
         title
       }
     }
-    allBlogPost(filter: { category: { in: [$category] } }) {
+    allBlogPost(
+      filter: { category: { in: [$category] }, published: { eq: true } }
+    ) {
       edges {
         node {
           category
@@ -19,6 +21,9 @@ export const query = graphql`
           slug
           id
         }
+      }
+      group(field: category) {
+        fieldValue
       }
     }
   }

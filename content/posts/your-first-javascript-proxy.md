@@ -3,7 +3,7 @@ slug: your-first-javascript-proxy
 date: 2019-01-06
 title: 'Your First JavaScript Proxy'
 description: 'Learn how to create your first Proxy in JavaScript'
-category: ['JavaScript']
+category: ['javascript']
 keywords: ['javascript', 'proxy']
 published: true
 ---
