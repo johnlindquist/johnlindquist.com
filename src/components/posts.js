@@ -26,7 +26,7 @@ export const Item = ({ post }) => {
             {post.category.map((c) => (
               <div
                 key={c}
-                className="mr-1 mb-3 capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-gray-200 text-gray-800"
+                className="mr-1 mb-3 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-gray-200 text-gray-800"
                 to={`/posts/${kebabCase(c)}`}
               >
                 {c === 'javascript' ? 'JavaScript' : c}
@@ -114,7 +114,7 @@ export default function Categories({ categories, posts, location, ...props }) {
             return (
               <div key={category.fieldValue}>
                 <div className="mb-2 mt-10 pl-8 sticky top-0 py-2 bg-white bg-opacity-75 bg-blur">
-                  <h2 className="text-3xl font-bold capitalize  inline hover:text-indigo-600">
+                  <h2 className="text-3xl font-bold  inline hover:text-indigo-600">
                     <Link to={`/posts/${kebabCase(category.fieldValue)}`}>
                       {category.fieldValue}
                     </Link>
@@ -159,9 +159,7 @@ export default function Categories({ categories, posts, location, ...props }) {
         posts.filter((post) => post.category.length === 0).length > 0 && (
           <div className="relative">
             <div className="mb-2 mt-10 ml-8 sticky top-0 py-2 bg-white bg-opacity-75 bg-blur">
-              <h2 className="text-3xl font-bold capitalize inline ">
-                Uncategorized
-              </h2>
+              <h2 className="text-3xl font-bold inline">Uncategorized</h2>
               <span>
                 {' '}
                 ({numberOfUncategorizedPosts}{' '}

@@ -77,7 +77,7 @@ export default function Post({
                 category.map((c) => (
                   <Link
                     key={c}
-                    className="capitalize mr-2 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
+                    className="mr-2 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
                     to={`/posts/${kebabCase(c)}`}
                   >
                     {c === 'javascript' ? 'JavaScript' : c}

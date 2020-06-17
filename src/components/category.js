@@ -20,7 +20,7 @@ export default function Category({ posts, categories, pageContext, ...props }) {
           <svg className="mr-3 h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" ><path fillRule="evenodd" clipRule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" /></svg>
           All Posts
         </Link>
-        <h1 className="text-4xl font-bold text-center capitalize">
+        <h1 className="text-4xl font-bold text-center">
           {category === 'javascript' ? 'JavaScript' : category}
         </h1>
       </div>
