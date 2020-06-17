@@ -6,6 +6,8 @@ published: true
 category: ['music']
 ---
 
+![animal cartoons dancing to music](../assets/animal-cartoons-dancing-to-music.jpg)
+
 I've been playing around with Music Visualizers in JavaScript. I figured it would be possible to pump music into the background of my OBS to add a bit of flavor to my livestream. The result is below and I'm quite happy with it:
 
 <YoutubeEmbed slug="UhhJQSkGGSM"/>
