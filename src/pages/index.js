@@ -85,19 +85,11 @@ export default function Index({ data: { allBlogPost, allPosts, categories } }) {
                   setSearchValue(e.target.value)
                 }}
                 className="form-input pl-8 block w-full sm:text-base sm:leading-5"
-                placeholder={`Search posts (${allPosts.totalCount})`}
+                placeholder={`Search posts (Press "/")`}
                 value={searchValue}
               />
               {/* prettier-ignore */}
               <svg className="absolute sm:top-2 top-3 mt-px ml-2 text-gray-400" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g fill="none" className="nc-icon-wrapper"><path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM2 8a6 6 0 1 1 10.89 3.476l4.817 4.817a1 1 0 0 1-1.414 1.414l-4.816-4.816A6 6 0 0 1 2 8z" fill="currentColor"/></g></svg>
-              {!searchOn && (
-                <div
-                  className="lg:visible invisible  absolute shadow-sm border border-gray-200 right-2 w-6 h-6 text-xs leading-none bg-white text-gray-600 rounded-md flex items-center justify-center"
-                  style={{ top: 7 }}
-                >
-                  {'/'}
-                </div>
-              )}
             </div>
           </form>
           {searchOn ? (
@@ -156,7 +148,7 @@ export default function Index({ data: { allBlogPost, allPosts, categories } }) {
             {categories.group.map((category) => (
               <Link
                 key={category.fieldValue}
-                className="m-1 capitalize inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
+                className="m-1 inline-flex items-center px-2 py-1 rounded-md text-sm font-medium leading-5 bg-indigo-100 text-indigo-800 hover:text-indigo-600 transform hover:scale-110 transition-all duration-100 ease-in-out"
                 to={`/posts/${kebabCase(category.fieldValue)}`}
               >
                 {category.fieldValue === 'javascript'
