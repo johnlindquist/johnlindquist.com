@@ -4,7 +4,7 @@ date: 2020-06-16
 published: true
 ---
 
-![./screenshot.png](./screenshot.png)
+![./using-node-with-alfred.png](./using-node-with-alfred.png)
 
 ```bash
 source ~/.zshrc
