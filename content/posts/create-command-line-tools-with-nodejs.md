@@ -3,7 +3,7 @@ slug: create-command-line-tools-with-nodejs
 title: Create Command Line Tools With Node.js
 date: 2019-03-10 12:03
 published: true
-category: ['Automation', 'node']
+category: ['Automation', 'node.js']
 ---
 
 There are so many every day tasks that we all come across that we need to automate away.
