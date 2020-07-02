@@ -2,7 +2,7 @@
 slug: teeth-before-and-after-invisalign
 title: Teeth Before and After Invisalign
 date: 2020-07-02 09:07
-published: false
+published: true
 category: ['Personal']
 ---
 
