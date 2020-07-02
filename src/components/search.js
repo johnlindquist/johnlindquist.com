@@ -62,7 +62,7 @@ export default function Search() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
         duration: 0.1,
       },
     },
@@ -79,7 +79,7 @@ export default function Search() {
   return isOpen ? (
     <div className="fixed z-20 w-screen h-screen top-0 left-0 p-24 flex items-center justify-center bg-opacity-25 bg-gray-500 bg-blur">
       <motion.div
-        style={{ perspective: 350 }}
+        style={{ perspective: 350, minHeight: 480 }}
         initial={{ opacity: 0, rotateX: -20 }}
         animate={{ opacity: 1, rotateX: 0 }}
         transition={{ duration: 0.3 }}
@@ -109,10 +109,6 @@ export default function Search() {
             setSearchValue(e.target.value)
           }}
         />
-        {/* <pre className="overflow-y-scroll h-80">
-          {JSON.stringify(result, null, 2)}
-        </pre> */}
-
         {searchOn ? (
           <motion.ul
             className="max-h-96 overflow-y-auto"
@@ -120,9 +116,8 @@ export default function Search() {
             initial="hidden"
             animate="show"
           >
-            {' '}
-            {result.map(({ item: post }) => (
-              <motion.li key={post.id} variants={resItem}>
+            {result.map(({ item: post }, index) => (
+              <motion.li key={post.id}>
                 <Link
                   className="flex justify-between px-6 py-3 border-b border-gray-100 hover:text-blue-600 hover:bg-blue-100 focus:text-blue-600 focus:bg-blue-100 focus:outline-none"
                   activeClassName="text-blue-800 bg-blue-50"
@@ -131,7 +126,9 @@ export default function Search() {
                   <span>{post.title}</span>
                   <div className="text-gray-400 text-sm">
                     {post.category.map((c) => (
-                      <span className="mx-2">{c}</span>
+                      <span key={c} className="mx-2">
+                        {c}
+                      </span>
                     ))}
                   </div>
                 </Link>
@@ -145,8 +142,8 @@ export default function Search() {
             initial="hidden"
             animate="show"
           >
-            {data.allBlogPost.edges.map(({ node: post }) => (
-              <motion.li key={post.id} variants={resItem}>
+            {data.allBlogPost.edges.map(({ node: post }, index) => (
+              <motion.li key={post.id} variants={index < 10 && resItem}>
                 <Link
                   className="flex justify-between px-6 py-3 border-b border-gray-100 hover:text-blue-600 hover:bg-blue-100 focus:text-blue-600 focus:bg-blue-100 focus:outline-none"
                   activeClassName="text-blue-800 bg-blue-50"
@@ -155,7 +152,9 @@ export default function Search() {
                   <span>{post.title}</span>
                   <div className="text-gray-400 text-sm">
                     {post.category.map((c) => (
-                      <span className="mx-2">{c}</span>
+                      <span key={c} className="mx-2">
+                        {c}
+                      </span>
                     ))}
                   </div>
                 </Link>
@@ -163,7 +162,6 @@ export default function Search() {
             ))}
           </motion.ul>
         )}
-
         {isEmpty(result) && searchOn && <div className="p-6">No Results</div>}
       </motion.div>
     </div>
