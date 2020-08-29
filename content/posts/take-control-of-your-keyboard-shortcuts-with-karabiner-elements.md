@@ -1,6 +1,6 @@
 ---
-slug: remap-keyboard-shortcuts-with-karabiner-elements
-title: Remap Keyboard Shortcuts Karabiner Elements
+slug: take-control-of-your-keyboard-shortcuts-with-karabiner-elements
+title: Take Control of Your Keyboard Shortcuts with Karabiner Elements
 date: 2020-08-29 09:08
 published: true
 category: ['Karabiner']
