@@ -5,6 +5,7 @@ import mdxComponents from './mdx'
 import React from 'react'
 import Nav from './nav'
 import SEO from './seo'
+import Newsletter from './newsletter'
 import 'focus-visible'
 
 export default function Layout(props) {
@@ -38,6 +39,7 @@ export default function Layout(props) {
         <MDXProvider components={mdxComponents}>
           <main>{props.children}</main>
         </MDXProvider>
+        <Newsletter />
       </div>
     </div>
   )
