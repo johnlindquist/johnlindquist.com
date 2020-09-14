@@ -6,7 +6,7 @@ published: true
 category: ['Node.js', 'nvm', 'zsh']
 ---
 
-I enjoy using the very latest version of [node.js](https://nodejs.org/) for my quick scripts I write on my computer. That means that my [nvm](https://github.com/nvm-sh/nvm) is set to run Node v14. Every time I've fired up our [https://github.com/eggheadio/egghead-next](egghead-next) project recently, I've had to switch to Node.js v12 (the latest stable version) to run `yarn dev`. I was getting sick of running `nvm use 12` every time I opened a shell, so I set out to see what I could do.
+I enjoy using the very latest version of [node.js](https://nodejs.org/) for my quick scripts I write on my computer. That means that my [nvm](https://github.com/nvm-sh/nvm) is set to run Node v14. Every time I've fired up our [egghead-next](https://github.com/eggheadio/egghead-next) project recently, I've had to switch to Node.js v12 (the latest stable version) to run `yarn dev`. I was getting sick of running `nvm use 12` every time I opened a shell, so I set out to see what I could do.
 
 It turns out that [zsh](https://www.zsh.org/) has a [precmd](http://zsh.sourceforge.net/Doc/Release/Functions.html) "hook" that allows you to run some code each time you open a new prompt. That gave me an idea to check my current Node version against the Node version listed in the package.json.
 
