@@ -10,7 +10,7 @@ category: ['']
 
 **Your goal**: _transfer your skill to the viewer_.
 
-So pick the skill you want the viewer to takeaway from the video:
+So pick the skill you want the viewer to take away from the video:
 
 - Write a Dynamic Route in Next.js
 - Connect a Bluetooth Controller to a Lego Boost Kit
@@ -18,25 +18,25 @@ So pick the skill you want the viewer to takeaway from the video:
 
 ## Determine the Context
 
-How does this skill apply to their life. Think of the viewer, think of their situation, make a story where they would apply the skill:
+How does this skill apply to their life? Think of the viewer. Think of their situation. Make a story where they might apply the skill:
 
 - Building a Shopping Site with Inventory
 - Driving a Lego Car Through Obstacles
 - Filming Yourself for a Conference Presentation
 
-## Subtract the Skill From the Context
+## Separate the Skill From the Story
 
 > "Where do I start?!?!?"
 
-At this point, you have a skill and the context. Think of the context and subtract the skill:
+At this point, you have a skill and the context in which they'll use the skill. Think of the story in the context and separate the skill.
 
-- A Shopping Site with Invertory, But No Router
+- A Shopping Site with Inventory, But No Router
 - A Lego Car Built and Type of Controller Already Selected
 - Camera Set up and Pointing at Your Face
 
 ## Write Commands for the Steps
 
-Tell your viewers what to do. Use an [Imperative Sentence](https://examples.yourdictionary.com/imperative-sentence-examples.html). Write down the steps of adding the skill to the context as instructions. Each step is an action with a before and after.
+Tell your viewers what to do. Use an [Imperative Sentence](https://examples.yourdictionary.com/imperative-sentence-examples.html). Write down the steps of adding the skill to the context as instructions. Each step is an action with the before and after context.
 
 Think Lego assembly or Ikea furniture.
 
@@ -50,9 +50,9 @@ Show your work. The viewer wants to see you perform the skill. This is new to th
 
 You have the skill. You've done this before. You know the steps.
 
-The viewers don't.
+The viewer does not.
 
-That is the only qualification you need. Any academic doubt you may have around unknowns doesn't apply if you stick to steps demonstrating a skill.
+The skill is the only qualification you need. Academic doubt around unknowns doesn't apply if you stick to demonstrating a skill.
 
 ## Know When to Stop and Recap
 
