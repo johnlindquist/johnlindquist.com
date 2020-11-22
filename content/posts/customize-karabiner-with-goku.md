@@ -86,10 +86,10 @@ The tool you'll need to make this happen is called [Goku](https://github.com/yqr
 brew install yqrashawn/goku/goku
 ```
 
-3. Create a `karabiner.edn` file in your `~/config/karabiner.edn`
+3. Create a `karabiner.edn` file in your `~/.config/karabiner.edn`
 
 4. Finally, run `gokuw` and Goku will automatically watch for file changes in the `karabiner.edn` file and
-   add them to the `Default` profile of your `~/config/karabiner/karabiner.json` file.
+   add them to the `Default` profile of your `~/.config/karabiner/karabiner.json` file.
 
 I struggled a bit figuring out the syntax of everything, but once I did, creating everything I needed has
 become way easier. I'm absolutely in love with it.
