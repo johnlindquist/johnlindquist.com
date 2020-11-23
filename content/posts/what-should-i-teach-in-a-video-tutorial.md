@@ -3,7 +3,7 @@ slug: what-should-i-teach-in-a-video-tutorial
 title: What Should I Teach in a Video Tutorial?
 date: 2020-10-02 15:10
 published: true
-category: ['']
+category: ['Teaching']
 ---
 
 ## Start at the End

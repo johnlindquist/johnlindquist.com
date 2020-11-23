@@ -3,7 +3,7 @@ slug: use-applescript-in-a-shell-script
 title: Use AppleScript in a Shell Script
 date: 2020-11-23
 published: true
-category: ['']
+category: ['AppleScript']
 ---
 
 ## Use AppleScript in a Shell Script
