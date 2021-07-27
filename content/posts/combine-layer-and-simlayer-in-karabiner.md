@@ -27,7 +27,11 @@ I would approach combining them like so:
 
 ```clojure
  :main [
-        ;
+        ;order matters*
+        {:des "tab+t"
+         :rules [[:condi :tab-mode :t-mode]
+                 [:h [:b :o :t :h]];
+                 ]}
         {:des "t"
          :rules [[:condi ["tab-mode" 0] :t-mode]
                  [:h [:t]];
@@ -35,10 +39,6 @@ I would approach combining them like so:
         {:des "tab"
          :rules [:tab-mode
                  [:h [:t :a :b]];
-                 ]}
-        {:des "tab+t"
-         :rules [[:condi :tab-mode :t-mode]
-                 [:h [:b :o :t :h]];
                  ]}
         ;
         ]
