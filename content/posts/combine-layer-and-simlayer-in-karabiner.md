@@ -1,6 +1,6 @@
 ---
 slug: combine-layer-and-simlayer-in-karabiner
-title: Multiple Sim Layers in Karabiner
+title: Combine Layers and Simlayers in Karabiner
 date: 2021-07-26 15:57
 published: true
 category: ['Karabiner']
