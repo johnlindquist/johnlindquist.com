@@ -26,7 +26,7 @@ set myArgument to (item 1 of argv)
 
 -- usage: `open-tab twitter`
 -- Opens chrome, checks if twitter is already open,
--- switches to existing tab. Opens a new tab it not.
+-- switches to existing tab. Opens a new tab if not.
 
 on run argv
 	set address to (item 1 of argv)
